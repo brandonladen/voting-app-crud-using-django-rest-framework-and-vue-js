@@ -1,0 +1,48 @@
+{% extends 'core/base.html' %}
+  
+{% block content %}
+        <div class="container-xl big-padding">
+        <p>Logged in as: {{ request.user }}</p>
+            <div class="row section-title">
+                <h2 class="fs-1 fw-bolder font-awesome">Bengohub Cohort One Voting Portal {% now 'Y' %}</h2>
+                <p class="fs-4 fw-bold">Transparent and Accountable polling</p>
+            </div>
+            <div class="row">
+                {% for x in Candidate %}
+                    <div class="col-lg-4 col-md-6">
+                        <div class="text-white text-center mb-4 votcard shadow-md bg-white p-4 pt-5">
+                            <img class="rounded-pill shadow-md p-2" src="{{x.display_photo}}" alt="">
+                            <h4 class="mt-3 fs-5 mb-1 fw-bold">{{x.user.first_name}} {{x.user.last_name}}</h4>
+                            <h6 class="fs-7">Runnung to Be: <span class="text-primary fw-bold">{{x.post.get_title_display}}</span></h6>
+                            <p class="text-dark mt-3 mb-3 fs-8">{{x.background_info|truncatewords:42}}</p>
+                            <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary fw-bolder fs-8 mul d-inline-block col-lg-4 col-md-3  px-4 fs-8">view</button>
+                            <!--<button class="btn btn-danger fw-bolder px-4 ms-2 fs-8">Vote</button>-->
+                            <a class="btn btn-danger fw-bold fs-8 px-4 ms-2" href="{% url 'vote' x.id x.post.id %}">Vote</a>
+                        </div>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h1 class="modal-title fs-6 fw-bold fs-5" id="exampleModalLabel">Candidate Details</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-6 fw-bold fs-5" id="exampleModalLabel">Background Information</h1>
+                                    <p>{{x.background_info}}</p>
+                                </div>
+                                <div class="modal-header">
+                                    <h1 class="modal-title fs-6 fw-bold fs-5" id="exampleModalLabel">My Manifesto</h1>
+                                    <p>{{x.manifesto}}</p>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+{% endblock %}
+</html>

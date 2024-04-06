@@ -1,11 +1,11 @@
 import axios from "axios"
 
-const tokenString = sessionStorage.getItem('token')//sessionStorage, localStorage //Json Web Token - 
+const tokenString = sessionStorage.getItem('token')
 const baseURL = 'http://localhost:8000'
 
 const axiosInstance = axios.create({
-  baseURL: baseURL, // Replace with your Django backend URL
-  timeout: 360_000, // 6 mins timeout
+  baseURL: baseURL, 
+  timeout: 360_000,
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Token ${tokenString}`

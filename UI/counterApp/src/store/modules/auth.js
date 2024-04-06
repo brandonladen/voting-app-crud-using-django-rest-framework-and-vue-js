@@ -1,14 +1,9 @@
-<<<<<<< HEAD
 // src/store/auth/auth.js
 import axios from '@/axiosConfig';
-=======
-import axios from '@/axiosConfig'
->>>>>>> 962258574be1c30df545ef3633caa89138365b42
 
 const state = {
   isAuthenticated: false,
   user: null,
-<<<<<<< HEAD
 };
 
 const mutations = {
@@ -19,23 +14,10 @@ const mutations = {
     state.user = user;
   },
 };
-=======
-}
-
-const mutations = {
-  SET_AUTHENTICATED(state, isAuthenticated) {
-    state.isAuthenticated = isAuthenticated
-  },
-  SET_USER(state, user) {
-    state.user = user
-  },
-}
->>>>>>> 962258574be1c30df545ef3633caa89138365b42
 
 const actions = {
   async login({ commit }, payload) {
     try {
-<<<<<<< HEAD
       const response = await axios.post('/api-token/', payload);
 
       console.log(response);
@@ -60,35 +42,10 @@ const actions = {
       // Handle login error
       console.error('Login failed:', error.message);
       throw new Error('An error occurred during login.');
-=======
-      const response = await axios.post('login/', payload)
-
-      console.log(response)// x,y=1,2
-
-      const { token, user } = response.data
-
-      if (user.role === "Admin") {
-        sessionStorage.setItem('isAdmin', true)
-      } else {
-        sessionStorage.setItem('isAdmin', false)
-      }
-      commit('SET_AUTHENTICATED', true)
-      sessionStorage.setItem('token', token)
-      sessionStorage.setItem('user', user)
-      commit('SET_USER', user)
-    } catch (error) {
-      // Modify this part to include the response message in the error
-      let errorMessage = 'An error occurred during login.'
-      if (error.response && error.response.data && error.response.data.error) {
-        errorMessage = error.response.data.error
-      }
-      throw new Error(errorMessage)
->>>>>>> 962258574be1c30df545ef3633caa89138365b42
     }
   },
 
   logout({ commit }) {
-<<<<<<< HEAD
     // Remove access token from local storage
     sessionStorage.removeItem('accessToken');
 
@@ -117,28 +74,3 @@ export default {
   mutations,
   actions,
 };
-=======
-    sessionStorage.removeItem('token')
-    sessionStorage.removeItem('user')
-    sessionStorage.removeItem('isAdmin')
-    commit('SET_AUTHENTICATED', false, false)
-    commit('SET_USER', null)
-  },
-
-  checkAuthentication({ commit }) {
-    const token = sessionStorage.getItem('token')
-    const user = this.sessionStorage.getItem('user')
-    if (token) {
-      commit('SET_AUTHENTICATED', true)
-      commit('SET_USER', user)
-    }
-  },
-}
-
-export default {
-  namespaced: true, 
-  state,
-  mutations,
-  actions,
-}
->>>>>>> 962258574be1c30df545ef3633caa89138365b42

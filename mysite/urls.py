@@ -30,12 +30,8 @@ urlpatterns = [
     path('', include('polls.urls')),
     path('', include('Accounts.urls')),
     path('', include('polls.api_urls')),
-<<<<<<< HEAD
     path('api-token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api-token-refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-=======
-    path('api/auth/', include('authentication.urls')),
->>>>>>> 962258574be1c30df545ef3633caa89138365b42
 ]
 urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

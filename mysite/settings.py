@@ -43,12 +43,8 @@ INSTALLED_APPS = [
     'widget_tweaks',
     'Accounts',
     'rest_framework',
-<<<<<<< HEAD
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist',
-=======
-    'rest_framework.authtoken',
->>>>>>> 962258574be1c30df545ef3633caa89138365b42
 ]
 
 REST_FRAMEWORK = {

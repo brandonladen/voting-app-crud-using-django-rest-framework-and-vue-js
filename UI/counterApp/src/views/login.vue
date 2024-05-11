@@ -40,7 +40,7 @@ const handleLogin = async () => {
           timer: 3000,
         })
         Swal.close()
-        router.push("/home")
+        router.push("/")
       })
 
     // Login successful, navigate to another route or do something else

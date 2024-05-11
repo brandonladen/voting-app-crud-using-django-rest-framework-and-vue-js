@@ -1,10 +1,24 @@
 <script setup>
-import { ref } from 'vue';
-import { onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import axios from 'axios';
-
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
+
+import { Modal, Button } from 'ant-design-vue';
+import CustomModal from '@/views/CustomModal.vue'
+
+const open = ref(false);
+const selectedCandidate = ref(null);
+
+
+const showModal = (candidate) => {
+  selectedCandidate.value = candidate;
+  open.value = true;
+};
+
+const closeModal = () => {
+  open.value = false;
+};
 
 const store = useStore();
 const router = useRouter();
@@ -74,7 +88,7 @@ const getUsername = (userId) => {
   <div class="app-container">
     <!-- Header -->
     <header class="header">
-    <router-link to="/home" class="home_btn">Home</router-link>
+    <router-link to="/" class="home_btn">Home</router-link>
     <router-link to="/results" class="results_btn">View Results</router-link>
       <button class="logout_btn" @click="handleLogout">Logout</button>
     </header>
@@ -92,8 +106,11 @@ const getUsername = (userId) => {
           <h4><b>{{ getUsername(candidate.user) }}</b></h4>
           <h4 class="fs-7">Running for: <span>{{ getPostName(candidate.post.title) }}</span></h4>
           <p>{{ candidate.background_info }}</p>
-          <button class="vote-btn">Vote</button>
-          <button class="view-btn">View</button>
+          <!-- <button class="vote-btn">Vote</button> -->
+          <!-- Pass candidate data to showModal method -->
+          <a-button type="primary" @click="showModal(candidate)">View</a-button>
+          <!-- Modal component -->
+          <CustomModal :candidate="selectedCandidate" :open="open" @update:open="open = $event" :get-username="getUsername"/>
         </div>
       </div>
     </div>

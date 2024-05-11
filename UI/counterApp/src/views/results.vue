@@ -50,9 +50,16 @@ const getUsername = (userId) => {
   return user2 ? user2.first_name + ' ' + user2.last_name  : 'Unknown';
 };
 
-const votepercentage = (votes_per_c) => {
-    const total_votes = votes.value.results.length - 1;
-    const candidate_votes = votes_per_c;
+const votepercentage = (cand_id) => {
+    const total_votes = votes.value.count;
+    let candidate_votes = 0;
+    const results = votes.value.results;
+
+    for(let i=0; i < results.length; i++){
+      if (results[i]["the_candidate"] === cand_id){
+        candidate_votes += 1;
+      }
+    }
 
     if (candidate_votes > 0) {
         const percentageV = (candidate_votes / total_votes) * 100;
@@ -61,13 +68,24 @@ const votepercentage = (votes_per_c) => {
         return 0;
     }
 };
+
+const candidate_votes = (cand_id) => {
+  let candidate_vote = 0;
+  const results = votes.value.results;
+  for(let i=0; i < results.length; i++){
+      if (results[i]["the_candidate"] === cand_id){
+        candidate_vote += 1;
+      }
+  }
+  return candidate_vote;
+};
 </script>
 
 <template>
     <!-- <h1>>>>>{{ votepercentage   }}<<<</h1> -->
     <!-- Header -->
     <header class="header">
-      <router-link to="/home" class="home_btn">Home</router-link>
+      <router-link to="/" class="home_btn">Home</router-link>
 
     </header> 
 
@@ -85,11 +103,11 @@ const votepercentage = (votes_per_c) => {
           </div>
           <div class="card-details">
             <h4>{{ getUsername(candidate.user) }}</h4>
-            <p>{{ candidate.votes.length  }} Votes</p>
+            <p>{{ candidate_votes(candidate.id)  }} Votes</p>
             <div class="progress">
               <!-- <div class="progress-bar bg-warning" role="progressbar" aria-label="Example with label" style="width: 55%;" aria-valuenow="55" aria-valuemin="0" aria-valuemax="100">55%</div> -->
-              <label>{{ votepercentage(candidate.votes.length)  }}% </label>
-              <progress max="100" :value="votepercentage(candidate.votes.length)"></progress>
+              <label>{{ votepercentage(candidate.id)  }}% </label>
+              <progress max="100" :value="votepercentage(candidate.id)"></progress>
             </div>
           </div>
         </div>

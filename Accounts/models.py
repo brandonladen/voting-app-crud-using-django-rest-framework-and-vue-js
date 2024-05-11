@@ -8,7 +8,7 @@ class Candidate(models.Model):
     background_info = models.TextField()
     manifesto = models.TextField()
     photo = models.ImageField(upload_to = "Candidate/photo", null=True, blank=True)
-    votes = models.ManyToManyField("Vote", null=True, blank=True)
+    votes = models.ManyToManyField("Vote", blank=True)
 
     def get_percentage_of_total_votes(self):
         # Step 1: Get the total number of votes for the specific candidate
@@ -54,15 +54,17 @@ class Post(models.Model):
 
 class Voter(models.Model):
     user = models.ForeignKey(User, on_delete = models.CASCADE)
-    photo = models.ImageField(upload_to = "Candidate/photo")
+    photo = models.ImageField(upload_to = "Candidate/photo",  blank=True, null=True)
 
     def __str__(self):
         return self.user.username
     
-class Vote(models.Model):  
+class Vote(models.Model):
+    the_candidate = models.ForeignKey("Candidate", on_delete=models.CASCADE, blank=True, null=True)  
     voter = models.ForeignKey(Voter, on_delete=models.CASCADE, related_name='votes', blank=True, null=True)   
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='votes', blank=True, null=True)   
     voted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.voter.user.username} voted"
+        return f"{self.voter.user.username} voted for "
+        # return f"{self.voter} voted for "

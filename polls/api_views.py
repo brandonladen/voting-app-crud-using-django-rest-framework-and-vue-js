@@ -35,12 +35,15 @@ class VoterViewSet(viewsets.ModelViewSet):
     authentication_classes = [SessionAuthentication, BasicAuthentication] 
     permission_classes = [IsAuthenticated]
 
+
 class VoteViewSet(viewsets.ModelViewSet):
     queryset = Vote.objects.all()
     serializer_class = VoteSerializer
     pagination_class = CustomPageNumberPagination
     authentication_classes = [SessionAuthentication, BasicAuthentication] 
     permission_classes = [IsAuthenticated]
+
+
     
 class UserViewSet(viewsets.ModelViewSet):
     queryset = User.objects.all()

@@ -19,9 +19,6 @@ const actions = {
   async login({ commit }, payload) {
     try {
       const response = await axios.post('/api-token/', payload);
-
-      console.log(response);
-
       // Extract the access token from the response
       const accessToken = response.data.access;
 

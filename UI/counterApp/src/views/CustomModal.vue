@@ -1,5 +1,8 @@
 <script>
 import axios from 'axios';
+import axiosInstance from '@/axiosConfig'
+
+
 export default {
   props: ['candidate', 'open', 'getUsername'],
   methods: {
@@ -11,7 +14,9 @@ export default {
         const postData = this.candidate.post.id;
 
         // Voter ID is obtained from the logged-in user
-        const voterId = 1;
+        const userToken = sessionStorage.getItem('accessToken');
+        const tokenPayload = JSON.parse(atob(userToken.split('.')[1]));
+        const voterId = tokenPayload.user_id;
 
         // Create vote instance
         const voteData = {
@@ -21,7 +26,7 @@ export default {
         };
 
         // Send POST request to create vote
-        const response = await axios.post('http://127.0.0.1:8000/api/votes/', voteData, {
+        const response = await axiosInstance.post('api/votes/', voteData, {
           auth: {
             username: 'brandon',
             password: '123',
